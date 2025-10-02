@@ -34,7 +34,7 @@ Shows how sales evolve from **January to December** each year.
 
 ---
 
-### 2. Top Cities Contribution (Donut Chart)
+### 2. Top Cities Contribution
 Displays the top 5 cities contributing most to sales.  
 
 ![Top Cities](images/Cities.png)
@@ -55,7 +55,7 @@ Shows which storage options (e.g., 128GB, 256GB, 512GB) are most popular among c
 
 ---
 
-### 5. Discount Usage (Donut Chart)
+### 5. Discount Usage
 Illustrates the proportion of transactions using discount codes.  
 
 ![Discount Usage](images/use_discount.png)
