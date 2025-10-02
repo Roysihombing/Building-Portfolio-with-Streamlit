@@ -42,7 +42,7 @@ def load_data():
 df = load_data()
 
 # --- SIDEBAR FILTERS ---
-st.sidebar.header("🔎 Filter Data")
+st.sidebar.header("Filter Data 🔎")
 
 years = sorted(df["transaction_date"].dt.year.unique())
 year_filter = st.sidebar.multiselect("Select Year", options=years)
@@ -84,33 +84,31 @@ with col5:
 
 st.markdown("---")
 
-# --- VISUALIZATIONS WITH INSIGHTS ---
-
 # 1. Monthly Sales Trend
-st.subheader("📈 How does the monthly sales trend look?")
+st.subheader("How does the monthly sales trend look? 📈 ")
 sales_trend = df_selection.groupby(df_selection["transaction_date"].dt.strftime("%Y-%m"))["total"].sum()
 st.line_chart(sales_trend)
 
 last_date = df["transaction_date"].max().strftime("%d %B %Y")
 if "2024-12" in sales_trend.index:
-    st.info(f"ℹ️ The decline in December 2024 is because the dataset only contains transactions until **{last_date}**, not the full month.")
+    st.info(f"The decline ℹ️ in December 2024 is because the dataset only contains transactions until **{last_date}**, not the full month.")
 
 if len(sales_trend) > 1:
     growth = (sales_trend.iloc[-1] - sales_trend.iloc[-2]) / sales_trend.iloc[-2] * 100
-    st.markdown(f"📊 **Insight:** Sales in the last month changed by **{growth:.1f}%** compared to the previous month.")
+    st.markdown(f"**Insight:** Sales in the last month changed by **{growth:.1f}%** compared to the previous month.")
 
 # 2. Top 5 Cities (Donut Chart)
-st.subheader("🏙️ Which cities contribute the most to sales?")
+st.subheader("Which cities contribute the most to sales?")
 city_sales = df_selection.groupby("city")["total"].sum().sort_values(ascending=False).head(5).reset_index()
 fig_city = px.pie(city_sales, values="total", names="city", hole=0.5,
                   color_discrete_sequence=px.colors.sequential.Viridis)
 st.plotly_chart(fig_city, use_container_width=True)
 if not city_sales.empty:
     top_city, top_value = city_sales.iloc[0]["city"], city_sales.iloc[0]["total"]
-    st.markdown(f"📊 **Insight:** The city with the highest sales is **{top_city}** with {top_value:,.0f} in total sales.")
+    st.markdown(f"**Insight:** The city with the highest sales is **{top_city}** with {top_value:,.0f} in total sales.")
 
 # 3. Top 5 Products (Bar Chart)
-st.subheader("🔥 Which products are the best sellers?")
+st.subheader("Which products are the best sellers?")
 top5_products = df_selection.groupby("product_name")["total"].sum().sort_values(ascending=False).head(5).reset_index()
 fig_products = px.bar(top5_products, x="product_name", y="total",
                       color="total", color_continuous_scale="Blues")
@@ -118,10 +116,10 @@ fig_products.update_layout(xaxis={'categoryorder': 'total descending'})
 st.plotly_chart(fig_products, use_container_width=True)
 if not top5_products.empty:
     best_product = top5_products.iloc[0]["product_name"]
-    st.markdown(f"📊 **Insight:** The most sold product is **{best_product}**.")
+    st.markdown(f"**Insight:** The most sold product is **{best_product}**.")
 
 # 4. Sales by Storage (Bar Chart)
-st.subheader("💾 Which storage options are most popular?")
+st.subheader("Which storage options are most popular?")
 storage_sales = df_selection.groupby("storage")["total"].sum().sort_values(ascending=False).reset_index()
 fig_storage = px.bar(storage_sales, x="storage", y="total",
                      color="total", color_continuous_scale="Blues")
@@ -129,10 +127,10 @@ fig_storage.update_layout(xaxis={'categoryorder':'total descending'})
 st.plotly_chart(fig_storage, use_container_width=True)
 if not storage_sales.empty:
     fav_storage = storage_sales.iloc[0]["storage"]
-    st.markdown(f"📊 **Insight:** The most popular storage option is **{fav_storage}**.")
+    st.markdown(f"**Insight:** The most popular storage option is **{fav_storage}**.")
 
 # 5. Discount Usage (Donut Chart)
-st.subheader("🎟️ How many customers use discounts?")
+st.subheader("How many customers use discounts?")
 discount_dist = df_selection["use_discount"].value_counts().reset_index()
 discount_dist.columns = ["use_discount", "count"]
 fig_disc = px.pie(discount_dist, values="count", names="use_discount", hole=0.5,
@@ -141,10 +139,10 @@ st.plotly_chart(fig_disc, use_container_width=True)
 if not discount_dist.empty:
     used = discount_dist.loc[discount_dist["use_discount"]=="Used Discount","count"].sum()
     total = discount_dist["count"].sum()
-    st.markdown(f"📊 **Insight:** {used/total*100:.1f}% of transactions used a discount.")
+    st.markdown(f"**Insight:** {used/total*100:.1f}% of transactions used a discount.")
 
 # 6. Age Distribution (Bar Chart)
-st.subheader("👥 What is the age distribution of customers?")
+st.subheader("What is the age distribution of customers?")
 age_dist = df_selection["usia_group"].value_counts().sort_values(ascending=False).reset_index()
 age_dist.columns = ["usia_group", "count"]
 fig_age = px.bar(age_dist, x="usia_group", y="count",
@@ -153,7 +151,7 @@ fig_age.update_layout(xaxis={'categoryorder':'total descending'})
 st.plotly_chart(fig_age, use_container_width=True)
 if not age_dist.empty:
     dom_age = age_dist.iloc[0]["usia_group"]
-    st.markdown(f"📊 **Insight:** The dominant customer age group is **{dom_age}**.")
+    st.markdown(f"**Insight:** The dominant customer age group is **{dom_age}**.")
 
 st.markdown("---")
 
