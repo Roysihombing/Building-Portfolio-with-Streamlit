@@ -2,6 +2,7 @@
 
 This project is part of my **Final Project Portfolio** using **Streamlit**.  
 It provides an **interactive dashboard** to analyze customer behavior, sales performance, and product preferences between **2022 - 2024**.
+
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://roy-build-stream.streamlit.app//)
 ---
 
