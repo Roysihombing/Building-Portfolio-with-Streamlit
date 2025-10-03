@@ -84,7 +84,7 @@ with col5:
 
 st.markdown("---")
 
-# 1. Monthly Sales Trend
+# Monthly Sales Trend
 st.subheader("How does the monthly sales trend look? 📈 ")
 sales_trend = df_selection.groupby(df_selection["transaction_date"].dt.strftime("%Y-%m"))["total"].sum()
 st.line_chart(sales_trend)
@@ -97,7 +97,7 @@ if len(sales_trend) > 1:
     growth = (sales_trend.iloc[-1] - sales_trend.iloc[-2]) / sales_trend.iloc[-2] * 100
     st.markdown(f"**Insight:** Sales in the last month changed by **{growth:.1f}%** compared to the previous month.")
 
-# 2. Top 5 Cities (Donut Chart)
+# Top 5 Cities 
 st.subheader("Which cities contribute the most to sales?")
 city_sales = df_selection.groupby("city")["total"].sum().sort_values(ascending=False).head(5).reset_index()
 fig_city = px.pie(city_sales, values="total", names="city", hole=0.5,
@@ -107,7 +107,7 @@ if not city_sales.empty:
     top_city, top_value = city_sales.iloc[0]["city"], city_sales.iloc[0]["total"]
     st.markdown(f"**Insight:** The city with the highest sales is **{top_city}** with {top_value:,.0f} in total sales.")
 
-# 3. Top 5 Products (Bar Chart)
+# Top 5 Products
 st.subheader("Which products are the best sellers?")
 top5_products = df_selection.groupby("product_name")["total"].sum().sort_values(ascending=False).head(5).reset_index()
 fig_products = px.bar(top5_products, x="product_name", y="total",
@@ -118,7 +118,7 @@ if not top5_products.empty:
     best_product = top5_products.iloc[0]["product_name"]
     st.markdown(f"**Insight:** The most sold product is **{best_product}**.")
 
-# 4. Sales by Storage (Bar Chart)
+# Sales by Storage 
 st.subheader("Which storage options are most popular?")
 storage_sales = df_selection.groupby("storage")["total"].sum().sort_values(ascending=False).reset_index()
 fig_storage = px.bar(storage_sales, x="storage", y="total",
@@ -129,7 +129,7 @@ if not storage_sales.empty:
     fav_storage = storage_sales.iloc[0]["storage"]
     st.markdown(f"**Insight:** The most popular storage option is **{fav_storage}**.")
 
-# 5. Discount Usage (Donut Chart)
+# Discount Usage 
 st.subheader("How many customers use discounts?")
 discount_dist = df_selection["use_discount"].value_counts().reset_index()
 discount_dist.columns = ["use_discount", "count"]
@@ -141,7 +141,7 @@ if not discount_dist.empty:
     total = discount_dist["count"].sum()
     st.markdown(f"**Insight:** {used/total*100:.1f}% of transactions used a discount.")
 
-# 6. Age Distribution (Bar Chart)
+# Age Distribution 
 st.subheader("What is the age distribution of customers?")
 age_dist = df_selection["usia_group"].value_counts().sort_values(ascending=False).reset_index()
 age_dist.columns = ["usia_group", "count"]
@@ -162,4 +162,3 @@ with st.expander("Click to view raw data"):
     st.markdown(f"**Data Dimensions:** {df_selection.shape[0]} rows × {df_selection.shape[1]} columns")
 
 st.markdown("---")
-st.caption("Final Project Dashboard • by Roy Firman Sihombing")
